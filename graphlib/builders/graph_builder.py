@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from graphlib.bigraph import BiGraph
+from graphlib.graphs.bigraph import BiGraph
 
 class BiGraphBuilder(ABC):
     @abstractmethod
