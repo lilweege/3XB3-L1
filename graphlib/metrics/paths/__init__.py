@@ -1,3 +1,5 @@
-from graphlib.metrics.paths.astar import AStarShortestPathMetric
-from graphlib.metrics.paths.euclidian import EuclidianDistanceShortestPathMetric
+from graphlib.metrics.paths.astar import AStarPathMetric
 from graphlib.metrics.paths.dijkstra import DijkstraShortestPathMetric
+from graphlib.metrics.paths.euclidian import EuclidianDistancePathMetric
+from graphlib.metrics.paths.circular import CircularDistancePathMetric
+from graphlib.metrics.paths.path_metric import PathMetric

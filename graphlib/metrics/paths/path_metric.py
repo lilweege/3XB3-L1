@@ -4,6 +4,9 @@ from graphlib.metrics.graph_metric import GraphMetric
 class PathMetric(GraphMetric):
     def __init__(self, graph):
         super().__init__(graph)
+        self.reset_counters()
+
+    def reset_counters(self):
         self._edges_counter = 0
         self._nodes_counter = 0
         self._relaxation_counter = 0
