@@ -7,10 +7,14 @@ class TubemapCSVBuilder(BiGraphBuilder):
         self.stations = read_csv_contents(stations_filename)
         self.connections = read_csv_contents(connections_fliename)
         self.lines = read_csv_contents(lines_filename)
+        self.id_to_name = {}
+        self.name_to_id = {}
 
         G = BiGraph()
         for station in self.stations:
             G.add_node(station.id, name=station.name, zone=station.zone, latitude=station.latitude, longitude=station.longitude)
+            self.id_to_name[station.id] = station.name
+            self.name_to_id[station.name] = station.id
         for connection in self.connections:
             G.add_edge(connection.station1, connection.station2, line=connection.line, time=connection.time)
         return G

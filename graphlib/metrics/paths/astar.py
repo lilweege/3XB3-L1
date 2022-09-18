@@ -1,9 +1,16 @@
-from graphlib.metrics.graph_metric import GraphMetric
+from graphlib.metrics.paths.path_metric import PathMetric
 from graphlib.common.priority_queue import PriorityQueue
 from collections import defaultdict
 
-class AStarShortestPathMetric(GraphMetric):
-    def __call__(self, fr, to, weight_func, heuristic_func):
+class AStarShortestPathMetric(PathMetric):
+    def set_heuristic_func(self, heuristic_func):
+        self.heuristic_func = heuristic_func
+    
+    def __call__(self, fr, to, weight_func=None):
+        # If either weight or heuristic functions are not set, use a sensible default
+        weight_func = (lambda a, b: 1) if weight_func is None else weight_func
+        heuristic_func = (lambda u: 0) if not hasattr(self, 'heuristic_func') else self.heuristic_func
+
         # Each tuple in the priority queue should be:
         # (hcost, weight, node, prev_edge)
         pq = PriorityQueue()

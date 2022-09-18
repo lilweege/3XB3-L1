@@ -1,7 +1,6 @@
-from graphlib.metrics.graph_metric import GraphMetric
-from graphlib.metrics.astar import AStarShortestPathMetric
+from graphlib.metrics.paths.astar import AStarShortestPathMetric
 
-class EuclidianDistanceShortestPathMetric(GraphMetric):
+class EuclidianDistanceShortestPathMetric(AStarShortestPathMetric):
     def __call__(self, fr, to, weight_func):
         def eucl_dist(x1, y1, x2, y2):
             # Omitting the square root is okay because the function is monotonic
@@ -10,5 +9,6 @@ class EuclidianDistanceShortestPathMetric(GraphMetric):
             currNode = self.graph.adj[u]
             endNode = self.graph.adj[to]
             dist = eucl_dist(currNode.latitude, currNode.longitude, endNode.latitude, endNode.longitude)
-            return dist * 100 # FIXME: Arbitrary constant for some reason
-        return AStarShortestPathMetric(self.graph)(fr, to, weight_func, heuristic)
+            return dist * 100 # FIXME: Arbitrary constant weighting of heuristic
+        self.set_heuristic_func(heuristic)
+        return super().__call__(fr, to)

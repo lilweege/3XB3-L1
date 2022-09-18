@@ -1,5 +1,9 @@
 from graphlib.metrics.graph_metric import GraphMetric
 
 class DegreeMetric(GraphMetric):
-    def __call__(self, u):
-        return len(self.graph.adj[u].edges)
+    def __init__(self, graph, u):
+        super().__init__(graph)
+        self.u = u
+
+    def __call__(self):
+        return len(self.graph.adj[self.u].edges)

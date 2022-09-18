@@ -1,6 +1,6 @@
 from graphlib.common.priority_queue import PriorityQueue
 
-class Itinerary:
+class TubemapItinerary:
     def __init__(self, u, v):
         self.station1 = u
         self.station2 = v

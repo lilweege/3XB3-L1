@@ -1,7 +1,5 @@
-from graphlib.metrics.astar import AStarShortestPathMetric
-from graphlib.metrics.euclidian import EuclidianDistanceShortestPathMetric
-from graphlib.metrics.dijkstra import DijkstraShortestPathMetric
+import graphlib.metrics.paths
 from graphlib.metrics.number_of_nodes import NumberOfNodesMetric
 from graphlib.metrics.number_of_edges import NumberOfEdgesMetric
 from graphlib.metrics.degree import DegreeMetric
-from graphlib.metrics.itinerary import Itinerary
+from graphlib.metrics.tubemap_itinerary import TubemapItinerary
