@@ -14,4 +14,4 @@ class CircularDistancePathMetric(AStarPathMetric):
             return dist 
 
         self.set_heuristic_func(heuristic)
-        return super().__call__(fr, to)
+        return super().__call__(fr, to, weight_func)

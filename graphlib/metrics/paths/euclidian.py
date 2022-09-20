@@ -13,4 +13,5 @@ class EuclidianDistancePathMetric(AStarPathMetric):
             return dist * 100 # FIXME: Arbitrary constant weighting of heuristic
 
         self.set_heuristic_func(heuristic)
-        return super().__call__(fr, to)
+        return super().__call__(fr, to, weight_func)
+
