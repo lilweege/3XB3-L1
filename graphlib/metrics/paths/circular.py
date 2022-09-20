@@ -11,7 +11,7 @@ class CircularDistancePathMetric(AStarPathMetric):
             currNode = self.graph.adj[u]
             endNode = self.graph.adj[to]
             dist = circ_dist(currNode.latitude, currNode.longitude, endNode.latitude, endNode.longitude)
-            return dist 
+            return dist * 100 # FIXME: Arbitrary constant weighting of heuristic
 
         self.set_heuristic_func(heuristic)
         return super().__call__(fr, to, weight_func)
