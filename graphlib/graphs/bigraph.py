@@ -5,15 +5,13 @@ class BiGraph:
         def __init__(self, u, v, **kwargs):
             self.fr = u
             self.to = v
-            for k, v in kwargs.items():
-                self.__dict__[k] = v
+            self.__dict__ |= kwargs
 
     class Node:
         def __init__(self, id, **kwargs):
             self.id = id
             self.edges = []
-            for k, v in kwargs.items():
-                self.__dict__[k] = v
+            self.__dict__ |= kwargs
 
 
     def __init__(self):
