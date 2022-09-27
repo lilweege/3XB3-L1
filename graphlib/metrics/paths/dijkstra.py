@@ -1,5 +1,6 @@
 from graphlib.metrics.paths.astar import AStarPathMetric
 
+
 class DijkstraShortestPathMetric(AStarPathMetric):
     '''A specialization of A* with no heuristic function'''
 

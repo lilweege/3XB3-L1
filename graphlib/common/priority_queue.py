@@ -1,5 +1,6 @@
 import heapq
 
+
 class PriorityQueue:
     '''A wrapper for Python's heapq library'''
 
@@ -11,6 +12,6 @@ class PriorityQueue:
 
     def pop(self):
         return heapq.heappop(self.pq)
-    
+
     def __len__(self):
         return len(self.pq)

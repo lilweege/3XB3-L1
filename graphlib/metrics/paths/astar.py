@@ -3,21 +3,25 @@ from graphlib.common.priority_queue import PriorityQueue
 from graphlib.common.graph_utils import reconstruct_path
 from collections import defaultdict
 
+
 class AStarPathMetric(PathMetric):
     '''
-    Given a weight function and heuristic function, performs the A* algorithm on a graph
-    The <dist> and <edge> attributes store the distance between any pair of node, and the parent of any node, respectively
+    Given a weight function and heuristic function, performs the A* algorithm
+    on a graph. The <dist> and <edge> attributes store the distance between
+    any pair of node, and the parent of any node, respectively.
     '''
 
     def set_heuristic_func(self, heuristic_func):
         self.heuristic_func = heuristic_func
-    
+
     def __call__(self, fr, to, weight_func=None):
         self.reset_counters()
 
-        # If either weight or heuristic functions are not set, use a sensible default
+        # If either weight or heuristic functions are not set,
+        # then use a sensible default
         weight_func = (lambda a, b: 1) if weight_func is None else weight_func
-        heuristic_func = (lambda u: 0) if not hasattr(self, 'heuristic_func') else self.heuristic_func
+        heuristic_func = (lambda u: 0) if not hasattr(self, 'heuristic_func') \
+            else self.heuristic_func
 
         # Each tuple in the priority queue should be:
         # (hcost, weight, node, prev_edge)
@@ -27,7 +31,7 @@ class AStarPathMetric(PathMetric):
         self.dist = defaultdict(lambda: float('inf'))
         self.dist[fr] = 0
         self.edge = {}
-        
+
         while pq:
             # The first value in the tuple (the heuristic) is unused.
             # It is important that it is the first element in the tuple because

@@ -4,6 +4,7 @@ from graphlib.common.graph_utils import reconstruct_path
 from collections import defaultdict
 from functools import cache
 
+
 class TubemapPatrolMetric(GraphMetric):
     '''
     Solves the Travelling Salesman Problem for a Tubemap BiGraph
@@ -27,11 +28,13 @@ class TubemapPatrolMetric(GraphMetric):
             dist[start] = search.dist
             edge[start] = search.edge
 
-
         pred = defaultdict(dict)
         start = self.stations[0]
-        # The python functools.cache (or lru_cache) decorator is very useful for dynamic programming in python
+
+        # The python functools.cache (or lru_cache) decorator is very useful
+        # for dynamic programming in python
         # https://docs.python.org/3/library/functools.html#functools.cache
+
         @cache
         def tsp(u, remain):
             if remain == 0:
@@ -44,8 +47,9 @@ class TubemapPatrolMetric(GraphMetric):
                     pred[u][remain] = v
             return min_cost
 
-        # 'all_stations' is a bitmask where the i_th bit is set if it hasn't been visited yet
-        # Ideally this would be a bitset (or frozenset, but slow to copy/hash), but this is python...
+        # 'all_stations' is a bitmask where the i_th bit is set if it hasn't
+        # been visited yet. Ideally this would be a bitset (or frozenset,
+        # but not slow to copy/hash), but this is python...
         # NOTE: Arbirarily large ids are slow with this method
         all_stations = 0
         for station in self.stations:

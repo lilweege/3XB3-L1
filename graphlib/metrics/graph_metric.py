@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class GraphMetric(ABC):
     def __init__(self, graph):
         self.graph = graph

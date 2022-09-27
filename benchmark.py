@@ -6,8 +6,11 @@ from typing import Callable, Optional
 from graphlib.metrics.paths import PathMetric
 
 import re
+
+
 def normalize_name(s: str):
-    return re.sub("\s+", "_", s.strip())
+    return re.sub(r"\s+", "_", s.strip())
+
 
 @dataclass
 class TestCase:
@@ -16,24 +19,32 @@ class TestCase:
     func: Callable
     args: tuple = ()
 
+
 def london_tubemap_cases() -> list[TestCase]:
     from graphlib.builders import TubemapCSVBuilder
     from graphlib.metrics import TubemapItinerary
-    # from graphlib.metrics.paths import DijkstraShortestPathMetric, EuclidianDistancePathMetric
-    from graphlib.metrics.paths import DijkstraShortestPathMetric, CircularDistancePathMetric
+    from graphlib.metrics.paths import DijkstraShortestPathMetric
+    from graphlib.metrics.paths import CircularDistancePathMetric
 
-    tubemap_builder = TubemapCSVBuilder("_dataset/london.stations.csv", "_dataset/london.connections.csv", "_dataset/london.lines.csv")
+    tubemap_builder = TubemapCSVBuilder(
+        "_dataset/london.stations.csv",
+        "_dataset/london.connections.csv",
+        "_dataset/london.lines.csv"
+    )
     tubemap_graph = tubemap_builder.build()
 
     itineraries = [
-        ("Picadilly Circus", "St. Paul's"), # Typical short case
-        ("Hammersmith", "Stratford"),       # Longer path through center
-        ("Ealing Broadway", "Upminster")    # Longest possible path without transfering
+        # Typical short case
+        ("Picadilly Circus", "St. Paul's"),
+        # Longer path through center
+        ("Hammersmith", "Stratford"),
+        # Longest possible path without transfering
+        ("Ealing Broadway", "Upminster")
     ]
     edge_weightings = [
-        (1, 1, 1),   # Typical case default weightings
-        (1, 0, 0),   # Prioritize time only
-        (1, 1, 100), # Deprioritize line transfers
+        (1, 1, 1),    # Typical case default weightings
+        (1, 0, 0),    # Prioritize time only
+        (1, 1, 100),  # Deprioritize line transfers
     ]
     path_algorithms = [
         ("Dijkstra", DijkstraShortestPathMetric(tubemap_graph)),
@@ -49,7 +60,14 @@ def london_tubemap_cases() -> list[TestCase]:
             for search_name, search_metric in path_algorithms:
                 itinerary = TubemapItinerary(u, v)
                 itinerary.set_search_strategy(search_metric)
-                case_name = f"{search_name}-{'-'.join(map(str, edge_weighting))}-{normalize_name(start_station)}-{normalize_name(end_station)}"
+
+                weightings_str = '-'.join(map(str, edge_weighting))
+                algorithm_str = f"{search_name}-{weightings_str}"
+                start_str = normalize_name(start_station)
+                end_str = normalize_name(end_station)
+                itinerary_str = f"{start_str}-{end_str}"
+                case_name = f"{algorithm_str}-{itinerary_str}"
+
                 case_func = partial(itinerary.shortest_path, *edge_weighting)
                 cases.append(TestCase(case_name, search_metric, case_func))
 
@@ -60,6 +78,7 @@ def main():
     runner = pyperf.Runner()
     for case in london_tubemap_cases():
         runner.bench_func(case.name, case.func, *case.args)
+
 
 if __name__ == "__main__":
     main()

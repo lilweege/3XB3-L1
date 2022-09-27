@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from graphlib.metrics.graph_metric import GraphMetric
 
+
 class PathMetric(GraphMetric):
     def __init__(self, graph):
         super().__init__(graph)
@@ -13,7 +14,7 @@ class PathMetric(GraphMetric):
 
     def increment_edges_counter(self):
         self._edges_counter += 1
-    
+
     def increment_nodes_counter(self):
         self._nodes_counter += 1
 
