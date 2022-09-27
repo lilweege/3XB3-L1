@@ -1,6 +1,7 @@
-def reconstruct_path(fr, to, edge):
-    path = [to]
+def reconstruct_path(fr, to, edges):
+    path = []
     while to != fr:
-        to = edge[to]
-        path.append(to)
+        edge = edges[to]
+        path.append(edge)
+        to = edge.fr
     return list(reversed(path))

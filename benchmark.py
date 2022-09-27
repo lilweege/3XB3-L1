@@ -43,8 +43,8 @@ def london_tubemap_cases() -> list[TestCase]:
 
     cases = []
     for start_station, end_station in itineraries:
-        u = tubemap_builder.name_to_id[start_station]
-        v = tubemap_builder.name_to_id[end_station]
+        u = tubemap_builder.station_name_to_id[start_station]
+        v = tubemap_builder.station_name_to_id[end_station]
         for edge_weighting in edge_weightings:
             for search_name, search_metric in path_algorithms:
                 itinerary = TubemapItinerary(u, v)

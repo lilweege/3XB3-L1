@@ -41,7 +41,7 @@ class AStarPathMetric(PathMetric):
                 new_w = w + weight_func(prev_edge, curr_edge)
                 if self.dist[v] > new_w:
                     self.dist[v] = new_w
-                    self.edge[v] = u
+                    self.edge[v] = curr_edge
                     self.increment_relaxation_counter()
                     pq.push((new_w + heuristic_func(v), new_w, v, curr_edge))
 
