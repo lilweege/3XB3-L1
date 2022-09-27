@@ -9,6 +9,8 @@ def read_csv_contents(filename):
         try:
             return float(value)
         except ValueError: pass
+        if value == "NULL":
+            return None
         return value
 
     with open(filename, "r") as file:

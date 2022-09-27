@@ -22,8 +22,8 @@ def london_tubemap_cases() -> list[TestCase]:
     # from graphlib.metrics.paths import DijkstraShortestPathMetric, EuclidianDistancePathMetric
     from graphlib.metrics.paths import DijkstraShortestPathMetric, CircularDistancePathMetric
 
-    tubemap_builder = TubemapCSVBuilder()
-    tubemap_graph = tubemap_builder.build("_dataset/london.stations.csv", "_dataset/london.connections.csv", "_dataset/london.lines.csv")
+    tubemap_builder = TubemapCSVBuilder("_dataset/london.stations.csv", "_dataset/london.connections.csv", "_dataset/london.lines.csv")
+    tubemap_graph = tubemap_builder.build()
 
     itineraries = [
         ("Picadilly Circus", "St. Paul's"), # Typical short case

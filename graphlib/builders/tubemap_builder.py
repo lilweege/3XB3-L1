@@ -3,10 +3,15 @@ from graphlib.common.csv_reader import read_csv_contents
 from graphlib.graphs.bigraph import BiGraph
 
 class TubemapCSVBuilder(BiGraphBuilder):
-    def build(self, stations_fn, connections_fn, lines_fn) -> BiGraph:
-        self.stations = read_csv_contents(stations_fn)
-        self.connections = read_csv_contents(connections_fn)
-        self.lines = read_csv_contents(lines_fn)
+    def __init__(self, stations_fn, connections_fn, lines_fn):
+        self.stations_fn = stations_fn
+        self.connections_fn = connections_fn
+        self.lines_fn = lines_fn
+
+    def build(self) -> BiGraph:
+        self.stations = read_csv_contents(self.stations_fn)
+        self.connections = read_csv_contents(self.connections_fn)
+        self.lines = read_csv_contents(self.lines_fn)
         self.station_id_to_name = {}
         self.station_name_to_id = {}
         self.line_id_to_name = {}
