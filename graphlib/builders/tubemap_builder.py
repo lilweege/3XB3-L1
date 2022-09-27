@@ -4,14 +4,19 @@ from graphlib.graphs.bigraph import BiGraph
 
 class TubemapCSVBuilder(BiGraphBuilder):
     def __init__(self, stations_fn, connections_fn, lines_fn):
+        # Filenames of input CSV files
         self.stations_fn = stations_fn
         self.connections_fn = connections_fn
         self.lines_fn = lines_fn
 
     def build(self) -> BiGraph:
+        # Open and read CSV files to build graph
         self.stations = read_csv_contents(self.stations_fn)
         self.connections = read_csv_contents(self.connections_fn)
         self.lines = read_csv_contents(self.lines_fn)
+
+        # Associate names with ids to go alongside the graph
+        # Useful for representative purposes 
         self.station_id_to_name = {}
         self.station_name_to_id = {}
         self.line_id_to_name = {}
@@ -20,6 +25,7 @@ class TubemapCSVBuilder(BiGraphBuilder):
             self.line_id_to_name[line.line] = line.name
             self.line_name_to_id[line.name] = line.line
 
+        # Construct and return the graph from data in CSV files
         G = BiGraph()
         for station in self.stations:
             G.add_node(station.id, name=station.name, zone=station.zone, latitude=station.latitude, longitude=station.longitude)

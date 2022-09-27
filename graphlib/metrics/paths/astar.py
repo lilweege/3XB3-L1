@@ -4,6 +4,11 @@ from graphlib.common.graph_utils import reconstruct_path
 from collections import defaultdict
 
 class AStarPathMetric(PathMetric):
+    '''
+    Given a weight function and heuristic function, performs the A* algorithm on a graph
+    The <dist> and <edge> attributes store the distance between any pair of node, and the parent of any node, respectively
+    '''
+
     def set_heuristic_func(self, heuristic_func):
         self.heuristic_func = heuristic_func
     
@@ -39,11 +44,12 @@ class AStarPathMetric(PathMetric):
                 self.increment_edges_counter()
                 v = curr_edge.to
                 new_w = w + weight_func(prev_edge, curr_edge)
+                # If possible, relax edge
                 if self.dist[v] > new_w:
                     self.dist[v] = new_w
                     self.edge[v] = curr_edge
                     self.increment_relaxation_counter()
                     pq.push((new_w + heuristic_func(v), new_w, v, curr_edge))
 
-        # No path was found (usually impossible)
+        # No path was found
         return []

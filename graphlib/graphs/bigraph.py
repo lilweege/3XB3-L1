@@ -1,4 +1,6 @@
 class BiGraph:
+    '''Representation of a bidirectional graph using an adjacency map'''
+
     # In both Edge and Node classes, consume **kwargs so that the user can store
     # arbitrary values in each class by passing keyword arguents to the graph methods
     class Edge:
@@ -15,6 +17,7 @@ class BiGraph:
 
 
     def __init__(self):
+        # 'adj' maps from node id to a Node object
         self.adj = {}
         self.edges = 0
 

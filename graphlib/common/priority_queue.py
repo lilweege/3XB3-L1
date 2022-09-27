@@ -1,6 +1,8 @@
 import heapq
 
 class PriorityQueue:
+    '''A wrapper for Python's heapq library'''
+
     def __init__(self):
         self.pq = []
 

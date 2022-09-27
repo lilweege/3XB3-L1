@@ -3,6 +3,8 @@ from math import cos, asin, sqrt, radians
 AVG_EARTH_RADIUS = 6378
 
 class CircularDistancePathMetric(AStarPathMetric):
+    '''A specialization of A* with a circular distance heuristic function'''
+
     def __call__(self, fr, to, weight_func):
         def circ_dist(lat1, lon1, lat2, lon2): # https://en.wikipedia.org/wiki/Great-circle_distance
             return 2 * AVG_EARTH_RADIUS * asin(sqrt(0.5 - cos(radians(lat2-lat1))/2 + cos(radians(lat1)) * cos(radians(lat2)) * (1 - cos(radians(lon2-lon1)))/2))
