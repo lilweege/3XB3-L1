@@ -9,7 +9,7 @@ class TubemapItinerary:
     def set_search_strategy(self, strategy):
         self.search_strategy = strategy
 
-    def shortest_path(self, time_weight=1, conn_weight=1, transfer_weight=1):
+    def shortest_path(self, time_weight=1, conn_weight=0, transfer_weight=0):
         if time_weight < 0: raise ValueError(f"time_weight must be non-negative, got {time_weight}")
         if conn_weight < 0: raise ValueError(f"conn_weight must be non-negative, got {conn_weight}")
         if transfer_weight < 0: raise ValueError(f"transfer_weight must be non-negative, got {transfer_weight}")
