@@ -1,4 +1,4 @@
-from graphlib.graphs.bigraph import BiGraph
+from .bigraph import BiGraph
 
 __all__ = [
     'BiGraph'

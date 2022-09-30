@@ -52,7 +52,8 @@ class TubemapPatrolMetric(GraphMetric):
         # 'all_stations' is a bitmask where the i_th bit is set if it hasn't
         # been visited yet. Ideally this would be a bitset (or frozenset,
         # but not slow to copy/hash), but this is python...
-        # NOTE: Arbirarily large ids are slow with this method
+        # NOTE: Arbirarily large ids are slow with this method...
+        # This could be avoided by relabelling stations starting at 1
         all_stations = 0
         for station in self.stations:
             all_stations |= (1 << station)
