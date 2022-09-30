@@ -1,0 +1,123 @@
+@startuml
+class BiGraph {
+  adj: Dict[int, Node]
+  edges: int
+  __init__()
+  add_node(u, **kwargs)
+  add_edge(u, v, **kwargs)
+}
+
+class Edge {
+  fr: int
+  to: int
+  __dict__: {}
+  __init__(u, v, **kwargs)
+}
+
+class Node {
+  id: int
+  edges: List[Edge]
+  __dict__: {}
+  __init__(id, **kwargs)
+}
+
+abstract class BiGraphBuilder {
+  {abstract} build(*args, **kwargs): BiGraph
+}
+
+class TubemapCSVBuilder {
+  stations: List[Dict[str, Union[int, float, str, None]]]
+  connections: List[Dict[str, Union[int, float, str, None]]]
+  lines: List[Dict[str, Union[int, float, str, None]]]
+  id_to_name: Dict[int, str]
+  name_to_id: Dict[str, int]
+  build(stations_fn, connections_fn, lines_fn): BiGraph
+}
+
+class AStarShortestPathMetric {
+  heuristic_func: Callable[[int], float]
+  set_heuristic_func(heuristic_func)
+  __call__(fr, to, weight_func): List[int]
+}
+
+class DijkstraShortestPathMetric {
+  __call__(fr, to, weight_func): List[int]
+}
+
+class CircularDistancePathMetric {
+  __call__(fr, to, weight_func): List[int]
+}
+
+class EuclidianDistancePathMetric {
+  __call__(fr, to, weight_func): List[int]
+}
+
+abstract class PathMetric {
+  edges_counter: int
+  nodes_counter: int
+  relaxation_counter: int
+  reset_counters()
+  increment_edges_counter()
+  increment_nodes_counter()
+  increment_relaxation_counter()
+  {abstract} __call__(fr, to, weight_func): List[int]
+}
+
+abstract class GraphMetric {
+  graph: BiGraph
+  __init__(graph)
+  {abstract} __call__()
+}
+
+class TubemapItinerary {
+  station1: int
+  station2: int
+  search_strategy: PathMetric
+  __init__(fr, to)
+  set_search_strategy(strategy)
+  shortest_path(time_weight, conn_weight, transfer_weight)
+}
+
+class DegreeMetric {
+  u: int
+  __init__(graph, u)
+  __call__(): int
+}
+
+class NumberOfEdgesMetric {
+  __call__(): int  
+}
+
+class NumberOfNodesMetric {
+  __call__(): int
+}
+
+class TubemapPatrolMetric {
+  stations: List[int]
+  weight_func: (Edge, Edge) -> int
+  __init__(graph, stations, weight_func)
+  __call__(): (int), List[List[Edge]]
+}
+
+class TubemapIslandMetric {
+  __call__(): Dict[int, List[int]], Dict[int, int], List[Edge]
+}
+
+BiGraph o-- Edge
+BiGraph o-- Node
+Node o-- Edge
+BiGraphBuilder --> BiGraph
+BiGraphBuilder <|-- TubemapCSVBuilder
+PathMetric <|-- AStarShortestPathMetric
+AStarShortestPathMetric <|-- DijkstraShortestPathMetric
+AStarShortestPathMetric <|-- CircularDistancePathMetric 
+AStarShortestPathMetric <|-- EuclidianDistancePathMetric
+GraphMetric <|-- PathMetric
+BiGraph --o GraphMetric
+PathMetric o-- TubemapItinerary
+DegreeMetric --|> GraphMetric
+NumberOfEdgesMetric --|> GraphMetric
+NumberOfNodesMetric --|> GraphMetric
+TubemapIslandMetric --|> GraphMetric
+TubemapPatrolMetric --|> GraphMetric
+@enduml
