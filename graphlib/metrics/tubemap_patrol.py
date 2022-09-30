@@ -13,6 +13,8 @@ class TubemapPatrolMetric(GraphMetric):
 
     def __init__(self, graph, stations, weight_func=lambda p, c: c.time):
         super().__init__(graph)
+        if len(stations) == 0:
+            raise ValueError("stations must be a non-empty list")
         self.stations = stations
         self.weight_func = weight_func
 
