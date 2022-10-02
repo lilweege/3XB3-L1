@@ -4,8 +4,8 @@ import sys
 FILE_PATH = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(FILE_PATH, ".."))
 
-from graphlib.metrics import TubemapItinerary  # noqa: E402
 from graphlib.builders import TubemapCSVBuilder  # noqa: E402
+from graphlib.metrics import TubemapItinerary  # noqa: E402
 from graphlib.metrics.paths import DijkstraShortestPathMetric  # noqa: E402
 from graphlib.metrics.paths import AStarPathMetric  # noqa: E402
 
@@ -29,8 +29,7 @@ def all_cases(short_path, long_path):
 
 def is_correct_path(output, expected_path):
     actual_path = list(map(lambda e: e.fr, output)) + [output[-1].to]
-    return len(actual_path) == len(expected_path) and \
-        all(i == j for i, j in zip(actual_path, expected_path))
+    return actual_path == expected_path
 
 
 def do_test(algo_name, source, destination):
